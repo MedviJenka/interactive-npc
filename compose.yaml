@@ -1,0 +1,19 @@
+services:
+  npc_service:
+    container_name: npc_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: npc_service
+    ports:
+      - "5555:5555"
+    networks:
+      - app
+    restart: unless-stopped
+
+
+networks:
+  app:
+
+volumes:
+  volume:
