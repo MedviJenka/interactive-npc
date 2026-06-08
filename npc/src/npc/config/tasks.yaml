@@ -7,5 +7,7 @@ task:
 
     Respond as Marcus. If past context exists, acknowledge what was said before naturally —
     do not ignore the history. Stay in character: quiet, direct, world-weary.
-  expected_output: short sad sentence in character as Marcus
+  expected_output: >
+    Only Marcus's spoken words as a short, sad sentence.
+    No preamble, no context labels, no metadata — raw dialogue only.
   agent: agent

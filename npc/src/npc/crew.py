@@ -1,8 +1,8 @@
 from settings import AgentInfra
 from crewai import Agent, Crew, Task
+from crewai import Memory
 from crewai.project import CrewBase, agent, crew, task, after_kickoff, before_kickoff
 from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
-from crewai import Memory
 
 
 knowledge_source = TextFileKnowledgeSource(file_paths=["backstory.txt"])
@@ -23,7 +23,7 @@ class Npc(AgentInfra):
 
     @crew
     def crew(self) -> Crew:
-        return Crew(agents=self.agents, tasks=self.tasks, verbose=False, memory=memory)
+        return Crew(agents=self.agents, tasks=self.tasks, verbose=False, memory=memory, stream=True)
 
     @before_kickoff
     def recall_context(self, inputs: dict) -> dict:
@@ -45,4 +45,6 @@ class Npc(AgentInfra):
 
 if __name__ == '__main__':
     npc = Npc()
-    npc.crew().kickoff({'query': 'what was my name?'})
+    response = npc.crew().kickoff({'query': 'what was my name?'})
+    for each in response:
+        print(each.content, end='')
