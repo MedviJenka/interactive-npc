@@ -1,8 +1,14 @@
 ARG version=3.12-slim
-FROM app AS build
+FROM python:${version} AS build
+
+WORKDIR /app
+
 RUN pip install uv
-RUN uv sync
+
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen
+
 COPY . .
 
 FROM build AS npc_service
-CMD ["uviconr", "uv", "run", "main.py"]
+CMD ["uv", "run", "main.py"]

@@ -5,8 +5,12 @@ services:
       context: .
       dockerfile: Dockerfile
       target: npc_service
+    env_file:
+      - .env
     ports:
       - "5555:5555"
+    volumes:
+      - memory:/app/.crewai/memory
     networks:
       - app
     restart: unless-stopped
@@ -16,4 +20,4 @@ networks:
   app:
 
 volumes:
-  volume:
+  memory:

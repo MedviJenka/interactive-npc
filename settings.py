@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     LOGFIRE_TOKEN:         str = Field(...)
     GHCR_TOKEN:            str = Field(...)
     OPENAI_API_KEY:        str = Field(...)
+    OPENAI_MODEL:          str = Field(...)
 
 
 Config = Settings()
@@ -31,4 +32,4 @@ class AgentInfra:
 
     @cached_property
     def llm(self) -> LLM:
-        return LLM(model='gpt-5.2', api_key=Config.OPENAI_API_KEY)
+        return LLM(model=Config.OPENAI_MODEL, api_key=Config.OPENAI_API_KEY)
