@@ -1,16 +1,21 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import uvicorn
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator
+from log import Logger
 
 
-# Press the green button in the gutter to run the script.
+log = Logger(name="api-service")
+
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncGenerator:
+    log.fire.info(f'{log.name} started successfully')
+    yield
+    log.fire.info(f'{log.name} finished successfully')
+
+
+app = FastAPI()
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    uvicorn.run(app, host="0.0.0.0", port=5555)
