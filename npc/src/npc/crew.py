@@ -41,10 +41,3 @@ class Npc(AgentInfra):
     def remember(self, output):
         memory.remember(content=f"Marcus replied: {output.raw}", scope='/conversation')
         return output
-
-
-if __name__ == '__main__':
-    npc = Npc()
-    response = npc.crew().kickoff({'query': 'what was my name?'})
-    for each in response:
-        print(each.content, end='')
