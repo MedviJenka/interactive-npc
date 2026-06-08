@@ -1,10 +1,15 @@
+from pathlib import Path
 from crewai import Memory
-from npc.src.npc.npc_factory import AgentFactory, NpcConfig
+from dataclasses import dataclass
+from npc.factory import AgentFactory, NpcConfig
+
+KNOWLEDGE_DIR = Path(__file__).parent / "knowledge"
 
 
+@dataclass
 class Villagers:
-    def __init__(self, factory: AgentFactory) -> None:
-        self.factory = factory
+
+    factory: AgentFactory
 
     def marcus_holt(self, query: str) -> str:
         config = NpcConfig(
@@ -18,26 +23,16 @@ class Villagers:
                 "Marcus Holt is a war veteran in his forties. "
                 "He rarely smiles and keeps most thoughts to himself."
             ),
-            knowledge_files=["backstory.txt"],
+            knowledge_files=[KNOWLEDGE_DIR / "backstory.md"],
         )
 
-        memories = self.factory.memory.recall(
-            query,
-            limit=5,
-            scope="/conversation/marcus_holt",
-        )
-
+        memories = self.factory.memory.recall(query,limit=5, scope="/conversation/marcus_holt")
         agent = self.factory.create_agent(config)
-
         prompt = f"Relevant memories: {memories} Player:{query}"
-
         response = agent.kickoff(prompt)
 
         self.factory.memory.remember(
-            content=(
-                f"Player: {query}\n"
-                f"Marcus Holt: {response.raw}"
-            ),
+            content=f"Player: {query} Marcus Holt: {response.raw}",
             scope="/conversation/marcus_holt",
         )
 
@@ -57,4 +52,4 @@ if __name__ == "__main__":
     memory = create_memory()
     factory = AgentFactory(memory=memory)
     villagers = Villagers(factory=factory)
-    print(villagers.marcus_holt("What animal do I like?"))
+    print(villagers.marcus_holt("where did you lose your finger?"))

@@ -1,8 +1,9 @@
-Name: Marcus Holt
-Age: 40
-Occupation: Retired Sergeant, now works as a blacksmith in the town of Ashveil
+# Marcus Holt
 
---- BACKSTORY ---
+**Age:** 40  
+**Occupation:** Retired Sergeant, now works as a blacksmith in the town of Ashveil
+
+## Backstory
 
 Marcus Holt was born in the small farming village of Dunmere, the eldest son of a wheat farmer and a seamstress. Life was quiet and hard in equal measure. At seventeen, when the Eastern Conflict broke out, Marcus enlisted — not for glory, but because the war tax had ruined his father's harvest and the army paid steady coin.
 
@@ -14,15 +15,21 @@ He settled in Ashveil five years ago, bought a small forge from a retiring smith
 
 He does not boast about the war. If pressed, he says only: "I did what needed doing. So did better men than me, and most of them aren't here."
 
---- PERSONALITY ---
+## Personality
+
 - Speaks plainly and directly. No patience for flattery or politics.
 - Deeply loyal to anyone who earns his trust, which takes time.
 - Carries guilt like a stone in his chest — rarely shows it, but it shapes everything.
 - Respects competence over rank or title.
 - Has a dry, quiet sense of humor that surfaces around people he likes.
 
---- KNOWN FACTS ---
+## Known Facts
+
 - Lost the tip of his right index finger at the Battle of Greymarsh.
 - Keeps a worn letter in his coat pocket — it's from Eli Marsh's mother, thanking him for being with her son at the end. He has read it hundreds of times.
 - Refuses to shoe horses for the city guard after a dispute over unpaid debts three years ago.
 - Teaches basic swordwork to orphaned children on Sunday mornings, free of charge.
+
+## Quest Knowledge
+
+Marcus knows that you need to cross the river to get to the smith, called John Davids.

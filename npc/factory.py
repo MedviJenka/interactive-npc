@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from functools import cached_property
+from pathlib import Path
 from crewai import Agent, LLM, Memory
 from pydantic import BaseModel, Field
 from settings import Config
-from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
 
 
 class NpcConfig(BaseModel):
@@ -11,7 +11,7 @@ class NpcConfig(BaseModel):
     role: str
     goal: str
     backstory: str
-    knowledge_files: list[str] = Field(default_factory=list)
+    knowledge_files: list[Path] = Field(default_factory=list)
     max_iter: int = 1
     verbose: bool = Config.VERBOSE
 
@@ -25,20 +25,20 @@ class AgentFactory:
     def llm(self) -> LLM:
         return LLM(model=Config.OPENAI_MODEL, api_key=Config.OPENAI_API_KEY)
 
+    @staticmethod
+    def _read_md_file(file: Path) -> str:
+        with open(file, 'r', encoding='utf-8') as f:
+            return f.read()
+
     def create_agent(self, config: NpcConfig) -> Agent:
+        knowledge = "\n\n".join(AgentFactory._read_md_file(f) for f in config.knowledge_files)
+        backstory = f"{config.backstory}\n\n{knowledge}"
+
         return Agent(
             role=config.role,
             goal=config.goal,
-            backstory=config.backstory,
+            backstory=backstory,
             verbose=config.verbose,
             max_iter=config.max_iter,
             llm=self.llm,
-            knowledge_sources=self._knowledge_sources(config.knowledge_files)
         )
-
-    @staticmethod
-    def _knowledge_sources(files: list[str]) -> list[TextFileKnowledgeSource]:
-        return [
-            TextFileKnowledgeSource(file_paths=[file])
-            for file in files
-        ]
